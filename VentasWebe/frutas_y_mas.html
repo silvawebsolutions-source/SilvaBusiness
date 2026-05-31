@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/frutas.css">
+    <title>Ventas Silva | Frutas y Frescos</title>
+    <style>
+        :root { --accent-green: #2d5a27; }
+        .category-header {
+            border-left: 5px solid var(--accent-green);
+            padding-left: 15px;
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm" style="background: #1a1a1a;">
+    <div class="container d-flex align-items-center justify-content-between">
+        
+        <div class="d-flex align-items-center justify-content-between flex-grow-1 flex-lg-grow-0 w-sm-100">
+            <a class="navbar-brand d-flex align-items-center fw-bold m-0" href="index.html">
+                <div class="logo-container me-2">
+                    <img src="imagenes/logofrut.png" alt="Logo" class="logo-img rounded-circle border border-2 border-warning logo-grande">
+                </div>
+                <span class="brand-text">
+                    VENTAS <span class="ms-1" style="color:#d4af37">SILVA</span>
+                </span>
+            </a>
+
+            <div class="d-flex align-items-center d-lg-none">
+                <button class="btn btn-outline-light border-0 position-relative p-1 me-2" onclick="toggleCart()">
+                    <i class="bi bi-cart3 fs-3"></i>
+                    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">0</span>
+                </button>
+                <button class="navbar-toggler border-0 p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav text-uppercase fw-bold pt-3 pt-lg-0">
+                <li class="nav-item px-lg-3"><a class="nav-link " href="index.html">Inicio</a></li>
+                <li class="nav-item px-lg-3"><a class="nav-link" href="licores.html">Vinos y Licores</a></li>
+                <li class="nav-item px-lg-3"><a class="nav-link active" href="frutas_y_mas.html">Frutas y Frescos</a></li>
+            </ul>
+        </div>
+
+        <div class="d-none d-lg-flex align-items-center">
+            <button class="btn btn-outline-light border-0 position-relative p-1" onclick="toggleCart()">
+                <i class="bi bi-cart3 fs-3"></i>
+                <span id="cart-count-desktop" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">0</span>
+            </button>
+        </div>
+
+    </div>
+</nav>
+
+<header class="mercado-header position-relative d-flex align-items-center justify-content-center text-center overflow-hidden">
+    <div class="mercado-overlay"></div>
+    <div class="container position-relative z-3">
+        <h1 class="display-3 fw-bold text-white mb-2">MERCADO <span class="text-light-green">FRESCO</span></h1>
+        <p class="fs-5 text-white-50 mx-auto" style="max-width: 600px;">
+            Calidad premium en cada cosecha. Seleccionamos lo mejor de la temporada especialmente para tu mesa.
+        </p>
+    </div>
+    <div class="custom-shape-divider-bottom-1710000000">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C58.47,112.49,123.39,110.3,181.77,93.32,241.12,76.07,262.36,64.78,321.39,56.44Z" fill="#ffffff"></path>
+        </svg>
+    </div>
+</header>
+
+<main class="container my-5">
+    
+    <!-- BARRA DE BÚSQUEDA GLOBAL -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-12 col-md-6">
+            <div class="input-group shadow-sm rounded-4 overflow-hidden border">
+                <span class="input-group-text bg-white border-0 pe-1">
+                    <i class="bi bi-search text-muted"></i>
+                </span>
+                <input type="text" id="globalSearch" class="form-control border-0 ps-2 py-2" placeholder="¿Qué estás buscando hoy?">
+            </div>
+        </div>
+    </div>
+    
+    <div class="mb-4">
+        <h2 class="titulo-seccion text-success border-start border-success border-4 ps-3">Frutas de Temporada</h2>
+    </div>
+
+    <div class="row g-2 g-md-4 mb-5 d-flex">
+        
+        <div class="col-6 col-md-4">
+            <div class="product-card p-2 p-md-4 shadow-sm h-100 text-center border-0 d-flex flex-column">
+                <img src="imagenes/arandano.png" class="card-img-top mx-auto mb-2 mb-md-3 img-producto" alt="Arándano">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Arandano</h5>
+                    <p class="text-muted fs-small mb-1">Charola de 1/4 kl</p>
+                    <div class="product-price-action mt-auto">
+                        <p class="precio-texto fw-bold text-dark mb-2">$30.00</p>
+                        <div id="btn-container-Arandano" data-name="Arándano" data-price="30.00">
+                            <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Arándano', 30, 'Arandano')">+ Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div class="product-card p-2 p-md-4 shadow-sm h-100 text-center border-0 d-flex flex-column">
+                <img src="imagenes/zarzamora.png" class="card-img-top mx-auto mb-2 mb-md-3 img-producto" alt="Zarzamora">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Zarzamora</h5>
+                    <p class="text-muted fs-small mb-1">Charola de 1/4 kl</p>
+                    <div class="product-price-action mt-auto">
+                        <p class="precio-texto fw-bold text-dark mb-2">$20.00</p>
+                        <div id="btn-container-Zarzamora" data-name="Zarzamora" data-price="20.00">
+                            <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Zarzamora', 20, 'Zarzamora')">+ Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div class="product-card p-2 p-md-4 shadow-sm h-100 text-center border-0 d-flex flex-column">
+                <img src="imagenes/frambuesa.png" class="card-img-top mx-auto mb-2 mb-md-3 img-producto" alt="Frambuesa">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Frambuesa</h5>
+                    <p class="text-muted fs-small mb-1">Charola de 1/4 kl</p>
+                    <div class="product-price-action mt-auto">
+                        <p class="precio-texto fw-bold text-dark mb-2">$25.00</p>
+                        <div id="btn-container-Frambuesa" data-name="Frambuesa" data-price="25.00">
+                            <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Frambuesa', 25, 'Frambuesa')">+ Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div class="product-card p-2 p-md-4 shadow-sm h-100 text-center border-0 d-flex flex-column">
+                <img src="imagenes/fresa.png" class="card-img-top mx-auto mb-2 mb-md-3 img-producto" alt="Fresa Domo">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Fresa Domo</h5>
+                    <p class="text-muted fs-small mb-1">Charola de 1/2 kilo</p>
+                    <div class="product-price-action mt-auto">
+                        <p class="precio-texto fw-bold text-dark mb-2">$60.00</p>
+                        <div id="btn-container-FresaDomo" data-name="Fresa Domo" data-price="60.00">
+                            <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Fresa Domo', 60, 'FresaDomo')">+ Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div class="product-card p-2 p-md-4 shadow-sm h-100 text-center border-0 d-flex flex-column">
+                <img src="imagenes/fresa.png" class="card-img-top mx-auto mb-2 mb-md-3 img-producto" alt="Fresa a Granel">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Fresa Granel</h5>
+                    <p class="text-muted fs-small mb-1">Por Kilo</p>
+                    <div class="product-price-action mt-auto">
+                        <p class="precio-texto fw-bold text-dark mb-2">$80.00</p>
+                        <div id="btn-container-FresaGranel" data-name="Fresa Granel" data-price="80.00">
+                            <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Fresa Granel', 80, 'FresaGranel')">+ Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div class="product-card p-2 p-md-4 shadow-sm h-100 text-center border-0 d-flex flex-column">
+                <img src="imagenes/uva.png" class="card-img-top mx-auto mb-2 mb-md-3 img-producto" alt="Uva Verde">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Uva Verde</h5>
+                    <p class="text-muted fs-small mb-1">Uva sin semilla 900gr</p>
+                    <div class="product-price-action mt-auto">
+                        <p class="precio-texto fw-bold text-dark mb-2">$70.00</p>
+                        <div id="btn-container-UvaVerde" data-name="Uva Verde" data-price="70.00">
+                            <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Uva Verde', 70, 'UvaVerde')">+ Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div class="product-card p-2 p-md-4 shadow-sm h-100 text-center border-0 d-flex flex-column">
+                <img src="imagenes/cereza.png" class="card-img-top mx-auto mb-2 mb-md-3 img-producto" alt="Cereza">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Cereza</h5>
+                    <p class="text-muted fs-small mb-1">Aproximadamente 900gr</p>
+                    <div class="product-price-action mt-auto">
+                        <p class="precio-texto fw-bold text-dark mb-2">$60.00</p>
+                        <div id="btn-container-Cereza" data-name="Cereza" data-price="60.00">
+                            <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Cereza', 60, 'Cereza')">+ Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4 mt-5">
+        <h2 class="titulo-seccion text-success border-start border-success border-4 ps-3">Otros Productos</h2>
+    </div>
+
+    <div class="row g-2 g-md-4 d-flex">
+        <div class="col-6 col-md-4">
+            <div class="product-card p-2 p-md-4 shadow-sm h-100 text-center border-0 d-flex flex-column">
+                <img src="imagenes/huevo.png" class="card-img-top mx-auto mb-2 mb-md-3 img-producto" alt="Huevo Orgánico">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Huevo Orgánico</h5>
+                    <p class="text-muted fs-small mb-1">Calidad Premium</p>
+                    <div class="product-price-action mt-auto">
+                        <p class="precio-texto fw-bold text-dark mb-2">$100.00</p>
+                        <div id="btn-container-HuevoOrganico" data-name="Huevo Organico" data-price="100.00">
+                            <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Huevo Organico', 100, 'HuevoOrganico')">+ Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div class="product-card p-2 p-md-4 shadow-sm h-100 text-center border-0 d-flex flex-column">
+                <img src="imagenes/crema.png" class="card-img-top mx-auto mb-2 mb-md-3 img-producto" alt="Fresas con Crema">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Fresas con Crema</h5>
+                    <p class="text-muted fs-small mb-1">Vaso preparado</p>
+                    <div class="product-price-action mt-auto">
+                        <p class="precio-texto fw-bold text-dark mb-2">$55.00</p>
+                        <div id="btn-container-FresasCrema" data-name="Fresas con crema" data-price="55.00">
+                            <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Fresas con crema', 55, 'FresasCrema')">+ Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div class="product-card p-2 p-md-4 shadow-sm h-100 text-center border-0 d-flex flex-column">
+                <img src="imagenes/crema.png" class="card-img-top mx-auto mb-2 mb-md-3 img-producto" alt="Hielito de Fresa">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Hielito de Fresa</h5>
+                    <p class="text-muted fs-small mb-1">Fresas con crema</p>
+                    <div class="product-price-action mt-auto">
+                        <p class="precio-texto fw-bold text-dark mb-2">$20.00</p>
+                        <div id="btn-container-HielitoFresa" data-name="Hielito de fresas con crema" data-price="20.00">
+                            <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Hielito de fresas con crema', 20, 'HielitoFresa')">+ Añadir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+      
+<div id="cart-overlay" onclick="toggleCart()"></div>
+<div id="cart-sidebar" class="d-flex flex-column">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <h4 class="fw-bold mb-0">MI PEDIDO</h4>
+        <button class="btn-close" onclick="toggleCart()"></button>
+    </div>
+
+    <div id="cart-items" class="flex-grow-1 overflow-auto custom-scroll">
+        </div>
+
+    <div class="mt-auto pt-3 border-top bg-white">
+        <div class="d-flex justify-content-between fs-4 fw-bold">
+            <span>Total:</span>
+            <span id="cart-total">$0.00</span>
+        </div>
+        <button class="btn btn-dark w-100 py-3 mt-4 fw-bold shadow" data-bs-toggle="modal" data-bs-target="#deliveryModal" onclick="toggleCart()">
+            CONFIRMAR POR WHATSAPP
+        </button>
+        <button class="btn-vaciar-carrito w-100 mt-2" onclick="clearCart()">
+            <i class="bi bi-trash3"></i> VACIAR TODO EL CARRITO        
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" id="deliveryModal" tabindex="-1" aria-labelledby="deliveryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow" style="border-radius: 15px;">
+            <div class="modal-header bg-dark text-white" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                <h5 class="modal-title fw-bold" id="deliveryModalLabel">Método de Entrega</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="text-muted text-center mb-4">¿Cómo deseas recibir tu pedido?</p>
+                
+                <div class="d-flex gap-3 mb-4">
+                    <button type="button" class="btn btn-outline-dark w-50 py-3 fw-bold" id="btnSucursal" onclick="selectDeliveryMethod('sucursal')">
+                        🏪 Recoger en Sucursal
+                    </button>
+                    <button type="button" class="btn btn-outline-dark w-50 py-3 fw-bold" id="btnDomicilio" onclick="selectDeliveryMethod('domicilio')">
+                        🛵 Envío a Domicilio
+                    </button>
+                </div>
+
+                <div id="direccionContainer" class="d-none">
+                    <label for="inputDireccion" class="form-label fw-bold text-dark">Dirección de Entrega:</label>
+                    <textarea class="form-control" id="inputDireccion" rows="3" placeholder="Ingresa tu calle, número, colonia y referencias..." style="border-radius: 10px; resize: none;"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer border-0 p-3">
+                <button type="button" class="btn btn-secondary py-2 px-4" data-bs-dismiss="modal" style="border-radius: 10px;">Cancelar</button>
+                <button type="button" class="btn btn-success py-2 px-4 fw-bold" id="btnEnviarWhatsAppFinal" onclick="procesarEnvioWhatsApp()" disabled>
+                    ✅ Confirmar y Enviar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- SCRIPT DE FILTRADO EN TIEMPO REAL -->
+    <script>
+        document.getElementById('globalSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            // Selecciona las columnas contenedoras de cada tarjeta
+            const productContainers = document.querySelectorAll('main .row.d-flex > div[class^="col-"]');
+
+            productContainers.forEach(container => {
+                const titleElement = container.querySelector('.title-producto');
+                if (titleElement) {
+                    const productName = titleElement.innerText.toLowerCase();
+                    // Si el nombre coincide o la búsqueda está vacía, muestra la tarjeta completa
+                    if (productName.includes(searchTerm)) {
+                        container.removeAttribute('style'); // Restablece visualización usando clases nativas
+                    } else {
+                        container.setAttribute('style', 'display: none !important;'); // Oculta de forma limpia la columna completa
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script src="cart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/licores.css">    
+    <title>Ventas Silva | Licores</title>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top shadow-sm" style="background: #1a1a1a;">
+    <div class="container d-flex align-items-center justify-content-between">
+        
+        <!-- Lado Izquierdo: Logo -->
+        <div class="d-flex align-items-center justify-content-between flex-grow-1 flex-lg-grow-0 w-sm-100">
+            <a class="navbar-brand d-flex align-items-center fw-bold m-0" href="index.html">
+                <div class="logo-container me-2">
+                    <img src="imagenes/logofrut.png" alt="Logo" class="logo-img rounded-circle border border-2 border-warning logo-grande">
+                </div>
+                <span class="brand-text">
+                    VENTAS <span class="ms-1" style="color:#d4af37">SILVA</span>
+                </span>
+            </a>
+
+            <!-- Este bloque SOLO se ve en móvil (Contiene Carrito y Hamburguesa) -->
+            <div class="d-flex align-items-center d-lg-none">
+                <button class="btn btn-outline-light border-0 position-relative p-1 me-2" onclick="toggleCart()">
+                    <i class="bi bi-cart3 fs-3"></i>
+                    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">0</span>
+                </button>
+                <button class="navbar-toggler border-0 p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Centro: Menú -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav text-uppercase fw-bold pt-3 pt-lg-0">
+                <li class="nav-item px-lg-3"><a class="nav-link " href="index.html">Inicio</a></li>
+                <li class="nav-item px-lg-3"><a class="nav-link active" href="licores.html">Vinos y Licores</a></li>
+                <li class="nav-item px-lg-3"><a class="nav-link" href="frutas_y_mas.html">Frutas y Frescos</a></li>
+            </ul>
+        </div>
+
+        <!-- Derecha: Carrito Escritorio -->
+        <div class="d-none d-lg-flex align-items-center">
+            <button class="btn btn-outline-light border-0 position-relative p-1" onclick="toggleCart()">
+                <i class="bi bi-cart3 fs-3"></i>
+                <span id="cart-count-desktop" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">0</span>
+            </button>
+        </div>
+
+    </div>
+</nav>
+
+<!-- Header de Sección Elegante -->
+<header class="fiesta-header d-flex align-items-center justify-content-center text-center">
+    <div class="header-overlay"></div>
+    <div class="header-content position-relative">
+        <span class="text-uppercase letter-spacing-2 fw-light mb-2 d-block text-gold">Premium Selection</span>
+        <h1 class="display-3 fw-bold text-white mb-3">TODO PARA TU FIESTA</h1>
+        <div class="divider mx-auto mb-3"></div>
+        <p class="lead text-white-50 italic">Vinos, licores y complementos con entrega inmediata.</p>
+    </div>
+    <div class="custom-shape-divider-bottom-1710000000">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C58.47,112.49,123.39,110.3,181.77,93.32,241.12,76.07,262.36,64.78,321.39,56.44Z" fill="#C5A059"></path>
+        </svg>
+    </div>
+</header>
+
+<!-- Sección Principal de Productos -->
+<div class="container my-5">
+    
+    <!-- BARRA DE BÚSQUEDA GLOBAL -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-12 col-md-6">
+            <div class="input-group shadow-sm rounded-4 overflow-hidden border">
+                <span class="input-group-text bg-white border-0 pe-1">
+                    <i class="bi bi-search text-muted"></i>
+                </span>
+                <input type="text" id="globalSearch" class="form-control border-0 ps-2 py-2" placeholder="¿Qué estás buscando hoy?" onkeyup="filtrarLicores()">
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <h2 class="titulo-seccion text-dark">Nuestra Cava</h2>
+    </div>
+
+    <!-- Mensaje de no resultados (oculto por defecto) -->
+    <div id="sin-resultados" class="text-center my-5 d-none">
+        <i class="bi bi-exclamation-circle text-muted" style="font-size: 3rem;"></i>
+        <p class="lead text-muted mt-2">No se encontraron licores que coincidan con tu búsqueda.</p>
+    </div>
+
+    <!-- Grid de productos optimizada -->
+    <div class="row g-4 row-cols-2 row-cols-md-3 row-cols-lg-3">
+        
+        <!-- 1. Black Label -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/blacklabel.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Black Label" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Black Label</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 40%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$700.00</div>
+                    <div id="btn-container-BlackLabel" class="mt-auto" data-name="Black Label" data-price="700.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Black Label', 700, 'BlackLabel')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Red Label -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/redlabel.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Red Label" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Red Label</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 40%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$290.00</div>
+                    <div id="btn-container-RedLabel" class="mt-auto" data-name="Red Label" data-price="290.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Red Label', 290, 'RedLabel')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 7 Leguas -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/7leguas.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="7 Leguas" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">7 Leguas</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 38%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$700.00</div>
+                    <div id="btn-container-SieteLeguas" class="mt-auto" data-name="Tequila 7 Leguas" data-price="700.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Tequila 7 Leguas', 700, 'SieteLeguas')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 1800 Cristalino -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/TQ1800.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="1800 Cristalino" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">1800 Cristalino</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 35%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$650.00</div>
+                    <div id="btn-container-1800Cristalino" class="mt-auto" data-name="Tequila 1800 Cristalino" data-price="650.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Tequila 1800 Cristalino', 650, '1800Cristalino')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Torres 10 -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/torres10.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Torres 10" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Torres 10</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 38%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$400.00</div>
+                    <div id="btn-container-Torres10" class="mt-auto" data-name="Torres 10" data-price="400.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Torres 10', 400, 'Torres10')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Buchanan's 12 -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/buchanas.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Buchanans 12" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Buchanan's 12 Years</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 40%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$650.00</div>
+                    <div id="btn-container-Buchanans12" class="mt-auto" data-name="Buchanan´s 12" data-price="650.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Buchanan´s 12', 650, 'Buchanans12')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Buchanan's 18 -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/buchanan's 18.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Buchanans 18" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Buchanan's 18</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 40%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$1,600.00</div>
+                    <div id="btn-container-Buchanans18" class="mt-auto" data-name="Buchanan´s 18" data-price="1600.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Buchanan´s 18', 1600, 'Buchanans18')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Don Julio 70 -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/julio.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Don Julio 70" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Don Julio 70</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 35%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$700.00</div>
+                    <div id="btn-container-DonJulio70" class="mt-auto" data-name="Tequila Don Julio 70" data-price="700.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Tequila Don Julio 70', 700, 'DonJulio70')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. Tradicional Cristalino -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/tradicionalcritalino.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Tradicional Cristalino" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Tradicional Cristalino</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 35%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$350.00</div>
+                    <div id="btn-container-TradicionalCristalino" class="mt-auto" data-name="Tradicional Cristalino" data-price="350.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Tradicional Cristalino', 350, 'TradicionalCristalino')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. Tradicional Plata -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/tradicionalplata.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Tradicional Plata" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Tradicional Plata</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 35%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$350.00</div>
+                    <div id="btn-container-TradicionalPlata" class="mt-auto" data-name="Tradicional Plata" data-price="350.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Tradicional Plata', 350, 'TradicionalPlata')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11. Centenario Plata -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/centenario.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Centenario Plata" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Centenario Plata</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 35%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$350.00</div>
+                    <div id="btn-container-CentenarioPlata" class="mt-auto" data-name="Tequila Centenario Plata" data-price="350.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Tequila Centenario Plata', 350, 'CentenarioPlata')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 12. Maestro Dobel -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/dobel.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Maestro Dobel" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Maestro Dobel</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 35%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$550.00</div>
+                    <div id="btn-container-MaestroDobel" class="mt-auto" data-name="Tequila Maestro Dobel" data-price="550.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Tequila Maestro Dobel', 550, 'MaestroDobel')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 13. Herradura Ultra -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/herraduraultra.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Herradura Ultra" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Herradura Ultra</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 35%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$700.00</div>
+                    <div id="btn-container-HerraduraUltra" class="mt-auto" data-name="Herradura Ultra" data-price="700.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Herradura Ultra', 700, 'HerraduraUltra')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 14. Bacardí Blanco -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/bacacho.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Bacardi Blanco" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Bacardí Blanco</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 38%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$300.00</div>
+                    <div id="btn-container-BacardiBlanco" class="mt-auto" data-name="Bacardi blanco" data-price="300.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Bacardi blanco', 300, 'BacardiBlanco')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 15. Patona Dobel -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/dobelpatona.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Patona Dobel" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Patona Dobel</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 35%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$1,250.00</div>
+                    <div id="btn-container-PatonaDobel" class="mt-auto" data-name="Patona Dobel" data-price="1250.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Patona Dobel', 1250, 'PatonaDobel')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 16. Patona 1800 -->
+        <div class="col-6 col-md-4 tarjeta-producto">
+            <div class="card product-card h-100 p-2 p-md-4 shadow-sm text-center border-0 d-flex flex-column">
+                <img src="imagenes/1800patona.png" class="card-img-top mx-auto mb-2 mb-md-3" alt="Patona 1800" style="height: 150px; object-fit: contain;">
+                <div class="card-body p-0 d-flex flex-column flex-grow-1">
+                    <h5 class="fw-bold mb-1 title-producto">Patona 1800</h5>
+                    <p class="text-muted fs-small mb-1">Alc. Vol: 35%</p>
+                    <div class="text-dark fw-bold mb-2 precio-texto">$1,250.00</div>
+                    <div id="btn-container-Patona1800" class="mt-auto" data-name="Patona 1800" data-price="1250.00">
+                        <button class="btn btn-add w-100 py-2 btn-sm-custom" onclick="addToCart('Patona 1800', 1250, 'Patona1800')">+ Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Carrito Sidebar -->
+<div id="cart-overlay" onclick="toggleCart()"></div>
+<div id="cart-sidebar" class="d-flex flex-column">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <h4 class="fw-bold mb-0">MI PEDIDO</h4>
+        <button class="btn-close" onclick="toggleCart()"></button>
+    </div>
+
+    <div id="cart-items" class="flex-grow-1 overflow-auto custom-scroll">
+        <!-- Carga dinámica -->
+    </div>
+
+    <div class="mt-auto pt-3 border-top bg-white">
+        <div class="d-flex justify-content-between fs-4 fw-bold">
+            <span>Total:</span>
+            <span id="cart-total">$0.00</span>
+        </div>
+        <button class="btn btn-dark w-100 py-3 mt-4 fw-bold shadow" data-bs-toggle="modal" data-bs-target="#deliveryModal" onclick="toggleCart()">
+            CONFIRMAR POR WHATSAPP
+        </button>
+        <button class="btn-vaciar-carrito w-100 mt-2" onclick="clearCart()">
+            <i class="bi bi-trash3"></i> VACIAR TODO EL CARRITO        
+        </button>
+    </div>
+</div>
+
+<!-- Modal de Selección de Método de Entrega -->
+<div class="modal fade" id="deliveryModal" tabindex="-1" aria-labelledby="deliveryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow" style="border-radius: 15px;">
+            <div class="modal-header bg-dark text-white" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                <h5 class="modal-title fw-bold" id="deliveryModalLabel">Método de Entrega</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <p class="text-muted text-center mb-4">¿Cómo deseas recibir tu pedido?</p>
+                
+                <div class="d-flex gap-3 mb-4">
+                    <button type="button" class="btn btn-outline-dark w-50 py-3 fw-bold" id="btnSucursal" onclick="selectDeliveryMethod('sucursal')">
+                        🏪 Recoger en Sucursal
+                    </button>
+                    <button type="button" class="btn btn-outline-dark w-50 py-3 fw-bold" id="btnDomicilio" onclick="selectDeliveryMethod('domicilio')">
+                        🛵 Envío a Domicilio
+                    </button>
+                </div>
+
+                <div id="direccionContainer" class="d-none">
+                    <label for="inputDireccion" class="form-label fw-bold text-dark">Dirección de Entrega:</label>
+                    <textarea class="form-control" id="inputDireccion" rows="3" placeholder="Ingresa tu calle, número, colonia y referencias..." style="border-radius: 10px; resize: none;"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer border-0 p-3">
+                <button type="button" class="btn btn-secondary py-2 px-4" data-bs-dismiss="modal" style="border-radius: 10px;">Cancelar</button>
+                <button type="button" class="btn btn-success py-2 px-4 fw-bold" id="btnEnviarWhatsAppFinal" onclick="procesarEnvioWhatsApp()" disabled>
+                    ✅ Confirmar y Enviar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Scripts -->
+    <script src="cart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Script de Filtrado en Tiempo Real -->
+<script>
+        function filtrarLicores() {
+            // 1. Capturar el texto del buscador y limpiar espacios/acentos
+            const input = document.getElementById('globalSearch');
+            if (!input) return; // Protección si el elemento no existe
+            
+            const textoBusqueda = input.value
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, ""); // Quita acentos correctamente
+
+            // 2. Traer todas las tarjetas de licores
+            const productos = document.querySelectorAll('.tarjeta-producto');
+            let encontrados = 0;
+
+            productos.forEach(producto => {
+                const contenedorTitulo = producto.querySelector('.title-producto');
+                if (!contenedorTitulo) return;
+
+                // Limpiar el título del producto actual para comparar
+                const titulo = contenedorTitulo.textContent
+                    .toLowerCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "");
+
+                // 3. Mostrar u ocultar la columna completa
+                if (titulo.includes(textoBusqueda)) {
+                    producto.setAttribute('style', 'display: block !important;'); // Fuerza la visibilidad
+                    encontrados++;
+                } else {
+                    producto.setAttribute('style', 'display: none !important;'); // Fuerza el ocultamiento
+                }
+            });
+
+            // 4. Alerta de "No resultados"
+            const mensajeSinResultados = document.getElementById('sin-resultados');
+            if (mensajeSinResultados) {
+                if (encontrados === 0) {
+                    mensajeSinResultados.setAttribute('style', 'display: block !important;');
+                } else {
+                    mensajeSinResultados.setAttribute('style', 'display: none !important;');
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
