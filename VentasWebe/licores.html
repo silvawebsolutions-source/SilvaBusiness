@@ -61,7 +61,7 @@
 <!-- Header de Sección Elegante -->
 <header class="fiesta-header d-flex align-items-center justify-content-center text-center">
     <div class="header-overlay"></div>
-    <div class="header-content position-relative">
+    <div class="header-content position-relative pb-5 mb-4">
         <span class="text-uppercase letter-spacing-2 fw-light mb-2 d-block text-gold">Premium Selection</span>
         <h1 class="display-3 fw-bold text-white mb-3">TODO PARA TU FIESTA</h1>
         <div class="divider mx-auto mb-3"></div>
@@ -357,18 +357,19 @@
         <!-- Carga dinámica -->
     </div>
 
-    <div class="mt-auto pt-3 border-top bg-white">
-        <div class="d-flex justify-content-between fs-4 fw-bold">
-            <span>Total:</span>
-            <span id="cart-total">$0.00</span>
-        </div>
-        <button class="btn btn-dark w-100 py-3 mt-4 fw-bold shadow" data-bs-toggle="modal" data-bs-target="#deliveryModal" onclick="toggleCart()">
-            CONFIRMAR POR WHATSAPP
-        </button>
-        <button class="btn-vaciar-carrito w-100 mt-2" onclick="clearCart()">
-            <i class="bi bi-trash3"></i> VACIAR TODO EL CARRITO        
-        </button>
+    <div class="mt-auto pt-3 pb-5 px-3 border-top bg-white">
+    <div class="d-flex justify-content-between fs-4 fw-bold">
+        <span>Total:</span>
+        <span id="cart-total">$0.00</span>
     </div>
+    
+    <button class="btn btn-dark w-100 py-3 mt-4 fw-bold shadow" data-bs-toggle="modal" data-bs-target="#deliveryModal" onclick="toggleCart()">
+        CONFIRMAR POR WHATSAPP
+    </button>
+    
+    <button class="btn-vaciar-carrito w-100 mt-2 mb-2" onclick="clearCart()">
+        <i class="bi bi-trash3"></i> VACIAR TODO EL CARRITO        
+    </button>
 </div>
 
 <!-- Modal de Selección de Método de Entrega -->

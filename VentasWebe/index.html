@@ -185,18 +185,19 @@
     <div id="cart-items" class="flex-grow-1 overflow-auto custom-scroll">
     </div>
 
-    <div class="mt-auto pt-3 border-top bg-white">
-        <div class="d-flex justify-content-between fs-4 fw-bold">
-            <span>Total:</span>
-            <span id="cart-total">$0.00</span>
-        </div>
-        <button class="btn btn-dark w-100 py-3 mt-4 fw-bold shadow" data-bs-toggle="modal" data-bs-target="#deliveryModal" onclick="toggleCart()">
-            CONFIRMAR POR WHATSAPP
-        </button>
-        <button class="btn-vaciar-carrito w-100 mt-2" onclick="clearCart()">
-            <i class="bi bi-trash3"></i> VACIAR TODO EL CARRITO        
-        </button>
+   <div class="mt-auto pt-3 pb-5 px-3 border-top bg-white">
+    <div class="d-flex justify-content-between fs-4 fw-bold">
+        <span>Total:</span>
+        <span id="cart-total">$0.00</span>
     </div>
+    
+    <button class="btn btn-dark w-100 py-3 mt-4 fw-bold shadow" data-bs-toggle="modal" data-bs-target="#deliveryModal" onclick="toggleCart()">
+        CONFIRMAR POR WHATSAPP
+    </button>
+    
+    <button class="btn-vaciar-carrito w-100 mt-2 mb-2" onclick="clearCart()">
+        <i class="bi bi-trash3"></i> VACIAR TODO EL CARRITO        
+    </button>
 </div>
 
 <div class="modal fade" id="deliveryModal" tabindex="-1" aria-labelledby="deliveryModalLabel" aria-hidden="true">
