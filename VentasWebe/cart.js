@@ -276,11 +276,12 @@ function procesarEnvioWhatsApp() {
 
     let infoEntregaText = "";
 
+    // Enviamos etiquetas planas cortas y específicas para que el formateador no duplique palabras
     if (selectedDeliveryMethod === 'sucursal') {
-        infoEntregaText = "\n📍 *Tipo de Entrega:* Recoger en Sucursal\n";
+        infoEntregaText = "METODO_RECOGER";
     } else if (selectedDeliveryMethod === 'domicilio') {
         const direccion = document.getElementById('inputDireccion').value.trim();
-        infoEntregaText = `\n🛵 *Tipo de Entrega:* Envío a Domicilio\n📍 *Dirección:* ${direccion}\n`;
+        infoEntregaText = `METODO_DOMICILIO|${direccion}`;
     }
 
     const modalElement = document.getElementById('deliveryModal');
@@ -297,9 +298,9 @@ function toggleMetodoPago() {
     const esTarjeta = document.getElementById('pagoTarjeta').checked;
     
     if (esTarjeta) {
-        contenedorDatos.classList.remove('d-none'); // Muestra los datos de tarjeta
+        contenedorDatos.classList.remove('d-none'); 
     } else {
-        contenedorDatos.classList.add('d-none');    // Oculta si regresan a efectivo
+        contenedorDatos.classList.add('d-none');    
     }
 }
 
@@ -326,54 +327,66 @@ function ejecutarEnvioWhatsAppFinal(datosEntrega) {
         return;
     }
 
-    let mensaje = "Hola Ventas Silva! Mi pedido es:\n\n";
-    
+    // Estructura limpia y con saltos de línea bien distribuidos
+    let mensaje = "\uD83D\uDC4B *Hola Ventas Silva! Mi pedido es:*\n\n";
+
+    // Productos con sangría limpia usando viñeta blanca
     cart.forEach(item => {
-        mensaje += `- ${item.quantity}x ${item.name} ($${(item.price * item.quantity).toFixed(2)})\n`;
+        mensaje += `\u25AB\uFE0F ${item.quantity}x ${item.name} ($${(item.price * item.quantity).toFixed(2)})\n`;
     });
 
+    // Total del carrito destacado
     const totalText = document.getElementById('cart-total').innerText;
-    mensaje += `\n*Total: ${totalText}*\n`;
-    
-    // 1. Obtener el método de pago seleccionado desde el Modal
+    mensaje += `\n\uD83D\uDCB0 *Total:* ${totalText}\n`;
+
+    // Procesado del método de pago
     const inputPago = document.querySelector('input[name="metodoPago"]:checked');
-    const metodoPago = inputPago ? inputPago.value : 'Efectivo'; 
+    const metodoPagoRaw = inputPago ? inputPago.value : 'Efectivo';
+    
+    let metodoPago = metodoPagoRaw.replace(/[^\x00-\x7F]/g, "").trim();
+    let textoPagoFinal = (metodoPago === 'Tarjeta' || metodoPago === 'Transferencia') ? 'Transferencia' : 'Efectivo';
 
-    // Forzamos "Método" con acento de manera segura
-    mensaje += `*M\u00e9todo de Pago:* ${metodoPago === 'Tarjeta' ? 'Transferencia' : 'Efectivo'}\n`;
-    
-    if (metodoPago === 'Tarjeta') {
-        mensaje += `_(Te adjunto mi comprobante de transferencia aqui mismo)_\n`;
+    mensaje += `\uD83D\uDCB3 *M\u00e9todo de Pago:* ${textoPagoFinal}\n`;
+
+    if (textoPagoFinal === 'Transferencia') {
+        mensaje += `\uD83D\uDCC4 _(Te adjunto mi comprobante de transferencia aqu\u00ed mismo)_\n`;
     }
-    
+
+    // Bloque de entrega maquetado con separadores estéticos profesionales
     if (datosEntrega) {
-        mensaje += `\n---------------------------------\n`;
-        
-        // Primero limpiamos los rombos y emojis rotos
-        let datosLimpios = datosEntrega.replace(/[^\x00-\x7F]/g, ""); 
-        
-        // CORRECCIÓN DEFINITIVA DE ORTOGRAFÍA:
-        // Buscamos cualquier variante mocha ("Envo", "Direccin") y la reparamos con sus acentos correctos
-        datosLimpios = datosLimpios
-            .replace(/Envo a Domicilio/gi, "Env\u00edo a Domicilio")
-            .replace(/Envio a Domicilio/gi, "Env\u00edo a Domicilio")
-            .replace(/Direccin/gi, "Direcci\u00f3n") 
-            .replace(/Direccion/gi, "Direcci\u00f3n")
-            .replace(/Metodo de Entrega/gi, "M\u00e9todo de Entrega");
+        mensaje += `\n━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
-        mensaje += datosLimpios;
-        mensaje += `\n---------------------------------`;
+        if (datosEntrega === "METODO_RECOGER") {
+            mensaje += `\uD83C\uDFEA *M\u00e9todo de Entrega:* Recoger en Sucursal\n`;
+        } else if (datosEntrega.startsWith("METODO_DOMICILIO|")) {
+            const direccionCliente = datosEntrega.split("|")[1];
+            mensaje += `\uD83D\uDE9A *M\u00e9todo de Entrega:* Env\u00edo a Domicilio\n`;
+            mensaje += `\uD83D\uDCCD *Direcci\u00f3n:* ${direccionCliente}\n`;
+        }
+
+        mensaje += `\n━━━━━━━━━━━━━━━━━━━━━`;
     }
 
-    const numero = "523122318704"; 
-    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+    // Cierre cordial
+    mensaje += `\n\n\uD83D\uDE4F _\u00a1Gracias por tu atenci\u00f3n!_`;
+
+    // Envío robusto usando URLSearchParams con la API oficial
+    const numero = "523122318704";
+    const baseEndpoint = "https://api.whatsapp.com/send";
     
-    // --- ACCIÓN CRÍTICA DE CIERRE ---
+    const params = new URLSearchParams();
+    params.append("phone", numero);
+    params.append("text", mensaje);
+
+    const urlFinal = `${baseEndpoint}?${params.toString()}`;
+
+    // Vaciar carrito de compras
     cart = [];
     localStorage.setItem('ventasSilvaCart', JSON.stringify([]));
     renderCart();
 
-    window.open(url, '_blank');
+    // Lanzar pestaña a WhatsApp
+    window.open(urlFinal, '_blank');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
