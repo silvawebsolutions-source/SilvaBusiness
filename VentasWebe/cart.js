@@ -292,6 +292,34 @@ function procesarEnvioWhatsApp() {
     ejecutarEnvioWhatsAppFinal(infoEntregaText);
 }
 
+function toggleMetodoPago() {
+    const contenedorDatos = document.getElementById('datosBancarios');
+    const esTarjeta = document.getElementById('pagoTarjeta').checked;
+    
+    if (esTarjeta) {
+        contenedorDatos.classList.remove('d-none'); // Muestra los datos de tarjeta
+    } else {
+        contenedorDatos.classList.add('d-none');    // Oculta si regresan a efectivo
+    }
+}
+
+function copiarClabe() {
+    const clabeTexto = document.getElementById('numClabe').innerText;
+    
+    navigator.clipboard.writeText(clabeTexto).then(() => {
+        const icono = document.getElementById('iconoCopiar');
+        icono.classList.remove('bi-clipboard', 'text-muted');
+        icono.classList.add('bi-clipboard-check-fill', 'text-success');
+        
+        setTimeout(() => {
+            icono.classList.remove('bi-clipboard-check-fill', 'text-success');
+            icono.classList.add('bi-clipboard', 'text-muted');
+        }, 2000);
+    }).catch(err => {
+        console.error('Error al copiar: ', err);
+    });
+}
+
 function ejecutarEnvioWhatsAppFinal(datosEntrega) {
     if (cart.length === 0) {
         Swal.fire('Carrito vacío', 'Agrega productos antes de confirmar.', 'warning');
@@ -301,23 +329,46 @@ function ejecutarEnvioWhatsAppFinal(datosEntrega) {
     let mensaje = "Hola Ventas Silva! Mi pedido es:\n\n";
     
     cart.forEach(item => {
-        mensaje += `• ${item.quantity}x ${item.name} ($${(item.price * item.quantity).toFixed(2)})\n`;
+        mensaje += `- ${item.quantity}x ${item.name} ($${(item.price * item.quantity).toFixed(2)})\n`;
     });
 
     const totalText = document.getElementById('cart-total').innerText;
     mensaje += `\n*Total: ${totalText}*\n`;
     
+    // 1. Obtener el método de pago seleccionado desde el Modal
+    const inputPago = document.querySelector('input[name="metodoPago"]:checked');
+    const metodoPago = inputPago ? inputPago.value : 'Efectivo'; 
+
+    // Forzamos "Método" con acento de manera segura
+    mensaje += `*M\u00e9todo de Pago:* ${metodoPago === 'Tarjeta' ? 'Transferencia' : 'Efectivo'}\n`;
+    
+    if (metodoPago === 'Tarjeta') {
+        mensaje += `_(Te adjunto mi comprobante de transferencia aqui mismo)_\n`;
+    }
+    
     if (datosEntrega) {
         mensaje += `\n---------------------------------\n`;
-        mensaje += datosEntrega;
-        mensaje += `---------------------------------`;
+        
+        // Primero limpiamos los rombos y emojis rotos
+        let datosLimpios = datosEntrega.replace(/[^\x00-\x7F]/g, ""); 
+        
+        // CORRECCIÓN DEFINITIVA DE ORTOGRAFÍA:
+        // Buscamos cualquier variante mocha ("Envo", "Direccin") y la reparamos con sus acentos correctos
+        datosLimpios = datosLimpios
+            .replace(/Envo a Domicilio/gi, "Env\u00edo a Domicilio")
+            .replace(/Envio a Domicilio/gi, "Env\u00edo a Domicilio")
+            .replace(/Direccin/gi, "Direcci\u00f3n") 
+            .replace(/Direccion/gi, "Direcci\u00f3n")
+            .replace(/Metodo de Entrega/gi, "M\u00e9todo de Entrega");
+
+        mensaje += datosLimpios;
+        mensaje += `\n---------------------------------`;
     }
 
     const numero = "523122318704"; 
     const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
     
     // --- ACCIÓN CRÍTICA DE CIERRE ---
-    // Reseteamos el carrito local, el LocalStorage y renderizamos para limpiar todos los controles de la tienda
     cart = [];
     localStorage.setItem('ventasSilvaCart', JSON.stringify([]));
     renderCart();
