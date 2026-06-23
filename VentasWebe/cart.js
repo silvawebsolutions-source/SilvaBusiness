@@ -368,7 +368,10 @@ function ejecutarEnvioWhatsAppFinal(datosEntrega) {
     }
 
     // Cierre cordial
-    mensaje += `\n\n\uD83D\uDE4F _\u00a1Gracias por tu atenci\u00f3n!_`;
+    mensaje += `\n\n\uD83D\uDE4F *¡Gracias por tu preferencia!*\n`;
+    mensaje += `\u23F0 *Horarios de atención:*\n`;
+    mensaje += `• _Lunes a Viernes: 4:00 PM - 9:00 PM_\n`;
+    mensaje += `• _Sábado y Domingo: 9:00 AM - 9:00 PM_`;
 
     // Envío robusto usando URLSearchParams con la API oficial
     const numero = "523121076549";
